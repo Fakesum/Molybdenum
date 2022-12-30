@@ -4,11 +4,16 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView as __QWebEngineView
 # import QUrl type
 from PyQt5.QtCore import QUrl as __QUrl
 
-import typing as __typing
 import multiprocess as __mp
 
 # QT Brower class
 class QTSpider(__QMainWindow, __mp.Process):
+    """QT Browser Class
+
+    Args:
+        __QMainWindow (_type_): Needed Q Main Window
+        __mp (_type_): Needed to run multiple
+    """
     import typing as __typing
 
     IURI = "https://www.google.com"
@@ -65,34 +70,6 @@ class QTSpider(__QMainWindow, __mp.Process):
         if self.__stages.__len__() == 1:
             self.browser.loadFinished.connect(self.__stages[0])
         self.__stages.append(wrapper)
-    
-    class Extensions:
-        class Recaptcha:
-            @staticmethod
-            def solve(self):
-                self.javascript("""console.log(document.querySelector("[title='reCAPTCHA']").contentDocument.querySelector(".recaptcha-checkbox-border").click())""")
 
     def run(self):
         self.qt_app.exec()
-
-if __name__ == "__main__":
-    class YTSpider(QTSpider):
-        IURI = "https://www.youtube.com/"
-
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            
-            self.register_stage(self.stage0)
-            self.register_stage(self.stage1)
-
-        def stage0(self):
-            print("REACHED")
-            return "https://www.google.com"
-        
-        def stage1(self):
-            print("SUPER REACHED")
-    YTSpider().start()
-    
-    import time
-    while True:
-        time.sleep(1)
